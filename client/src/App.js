@@ -1,11 +1,18 @@
+
 import './App.css';
-import Authscreen from './pages/authscreen';
-import HomePage from './pages/Homepage';
+import AuthScreen from './pages/AuthScreen';
+import HomeScreen from './pages/HomeScreen';
+import { useState } from 'react';
+
 function App() {
+  const [loggedIn,setloggedIn] = useState(localStorage.getItem('jwt')?true:false)
+
   return (
-    <div className="App">
-      <HomePage/>
-    </div>
+    <>
+      {
+        loggedIn? <HomeScreen setloggedIn={setloggedIn} />:<AuthScreen setloggedIn={setloggedIn} />
+      }
+    </>
   );
 }
 

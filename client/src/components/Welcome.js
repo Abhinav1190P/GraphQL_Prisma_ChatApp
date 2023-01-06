@@ -1,14 +1,14 @@
-import { Typography } from '@mui/material'
-import { Stack } from '@mui/system'
 import React from 'react'
+import { Stack, Typography } from '@mui/material';
 
 const Welcome = () => {
   return (
     <Stack
-    justifyContent={'center'}
+    justifyContent="center"
     alignItems="center"
+    flexGrow={1}
     >
-        <Typography>Welcome to teams</Typography>
+        <Typography variant="h2">Welcome to teams</Typography>
     </Stack>
   )
 }
