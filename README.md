@@ -1,1 +1,1 @@
-"# GraphQL_Prisma_ChatApp" 
+# GraphQL_Prisma_ChatApp
