@@ -17,6 +17,21 @@ const resolvers = {
                 not:userId
             }}})
             return users
+        },
+        messagesByUser: async(_,{recieverId},{userId})=>{
+            if(!userId) throw new ForbiddenError("You must be logged in")
+            const messages = await prisma.message.findMany({
+                where:{
+                    OR:[
+                        {senderId:userId,recieverId:recieverId},
+                        {senderId:recieverId,recieverId:userId}
+                    ]
+                },
+                orderBy:{
+                    createdAt:'asc'
+                }
+            })
+            return messages
         }
     },
     Mutation:{

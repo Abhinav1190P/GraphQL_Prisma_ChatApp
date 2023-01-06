@@ -3,7 +3,9 @@ import {gql} from 'apollo-server'
 const typeDefs = gql`
 type Query{
    users:[User]
+   messagesByUser(recieverId:Int!):[Message]
 }
+
 
 input UserInput{
    firstName:String!
