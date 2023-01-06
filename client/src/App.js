@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import Authscreen from './pages/authscreen';
+import HomePage from './pages/Homepage';
 function App() {
   return (
     <div className="App">
-      <Authscreen/>
+      <HomePage/>
     </div>
   );
 }
