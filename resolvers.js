@@ -1,5 +1,5 @@
 import pc from '@prisma/client'
-import { AuthenticationError } from 'apollo-server'
+import { AuthenticationError, ForbiddenError } from 'apollo-server'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 const salt_i = 10;
@@ -7,7 +7,17 @@ const prisma = new pc.PrismaClient()
 
 const resolvers = {
     Query:{
-        
+        users:async (_,args,{userId})=>{
+           if(!userId) throw new ForbiddenError("You must be logged in")
+            const users = await prisma.user.findMany({
+                orderBy: {
+                    createdAt:"desc"
+                },
+                where:{id:{
+                not:userId
+            }}})
+            return users
+        }
     },
     Mutation:{
         signupUser:async (_,{userNew})=>{

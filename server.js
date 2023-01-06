@@ -1,11 +1,19 @@
 import {ApolloServer} from 'apollo-server'
 import typeDefs from './typeDef.js';
 import resolvers from './resolvers.js';
-
+import jwt from 'jsonwebtoken'
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context:({req})=>{
+        const {authorization} = req.headers
+        if(authorization){
+            const {userId} = jwt.verify(authorization,process.env.JWT_SECRET)
+            
+            return {userId}
+        }
+    }
 });
 
 server.listen().then(({url})=>{
