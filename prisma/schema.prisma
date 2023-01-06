@@ -16,5 +16,16 @@ model User{
   password String
   email String @unique
   createdAt DateTime @default(now())
+  reciever Message[] @relation(name: "receiver")
+  sender Message[] @relation(name: "sender")
 }
 
+model Message {
+  id Int @id @default(autoincrement())
+  text String
+  recieverId Int
+  reciever User @relation(name:"receiver",fields: [recieverId], references: [id])
+  senderId Int
+  sender User @relation(name:"sender",fields: [senderId], references: [id])
+  createdAt DateTime @default(now())
+}
