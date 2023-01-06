@@ -1,6 +1,7 @@
 import pc from '@prisma/client'
-import { ApolloError, AuthenticationError } from 'apollo-server'
+import { AuthenticationError } from 'apollo-server'
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 const salt_i = 10;
 const prisma = new pc.PrismaClient()
 
@@ -20,6 +21,16 @@ const resolvers = {
                 }
             })
             return newUser
+        },
+        signinUser: async (parent,{userCred})=>{
+            const user = await prisma.user.findUnique({where:{email:userCred.email}}) 
+            if(!user) throw new AuthenticationError("No account found") 
+            
+            const isAuth = await bcrypt.compare(userCred.password,user.password)
+            if(!isAuth) throw new AuthenticationError("Email or password is invalid")
+            const token = jwt.sign({userId:user.id},process.env.JWT_SECRET)
+            return {token}
+
         }
     }
 }

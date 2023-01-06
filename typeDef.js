@@ -13,8 +13,19 @@ input UserInput{
    password:String!
 }
 
+input UserSignInInput{
+   email:String!
+   password:String!
+}
+
+type Token{
+   token:String!
+}
+
+
 type Mutation{
    signupUser(userNew: UserInput!):User
+   signinUser(userCred:UserSignInInput!):Token
 }
 
 type User{
