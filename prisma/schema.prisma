@@ -1,4 +1,5 @@
-
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -9,23 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User{
-  id Int @id @default(autoincrement())
-  firstName String
-  lastName String
-  password String
-  email String @unique
-  createdAt DateTime @default(now())
-  reciever Message[] @relation(name: "receiver")
-  sender Message[] @relation(name: "sender")
+   id Int @id @default(autoincrement())
+   firstName String
+   lastName String
+   password String
+   email String @unique
+   createdAt DateTime @default(now())
+   receiver Message[] @relation(name: "receiver")
+   sender Message[] @relation(name:"sender")
 }
 
-model Message {
-  id Int @id @default(autoincrement())
-  text String
-  recieverId Int
-  reciever User @relation(name:"receiver",fields: [recieverId], references: [id])
-  senderId Int
-  sender User @relation(name:"sender",fields: [senderId], references: [id])
-  createdAt DateTime @default(now())
+
+model Message{
+     id Int @id @default(autoincrement())
+     text String
+     receiverId Int
+     receiver User @relation(name:"receiver",fields: [receiverId],references: [id])
+     senderId Int 
+     sender User @relation(name:"sender",fields: [senderId],references: [id])
+     createdAt DateTime @default(now())
 }

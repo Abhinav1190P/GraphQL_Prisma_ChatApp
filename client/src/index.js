@@ -30,11 +30,11 @@ const authLink = setContext((_, { headers }) => {
 
 
 const httpLink = new HttpLink({
-  uri: 'https://graphql-apollo30.herokuapp.com/graphql'
+  uri: 'http://localhost:4000/graphql'
 });
 
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'wss://graphql-apollo30.herokuapp.com/graphql',
+  url: 'ws://localhost:4000/graphql',
 }));
 
 const splitLink = split(
